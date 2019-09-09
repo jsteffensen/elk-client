@@ -11,7 +11,7 @@ Add Angular Material: `ng add @angular/material`<br />
 
 Generate Material wrapper module: `ng g m MaterialWrapper`.
 
-set content of to:
+set content of \src\app\material-wrapper\material-wrapper.module.ts to:
 
 ```
 import { NgModule } from '@angular/core';
@@ -59,6 +59,67 @@ export class MaterialWrapperModule { }
 Generate schematic components<br />
 `ng generate @angular/material:dashboard MaterialDashboard`<br />
 `ng generate @angular/material:nav MaterialNavigation`
+
+Set \src\app\app.module.ts to:
+
+```
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialWrapperModule } from './material-wrapper/material-wrapper.module';
+import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MaterialNavigationComponent } from './material-navigation/material-navigation.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MaterialDashboardComponent,
+    MaterialNavigationComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialWrapperModule,
+    LayoutModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
+Set \src\app\app-routing.module.ts to:
+
+```
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
+
+const routes: Routes = [
+	{ path: '', component: MaterialDashboardComponent },
+	{ path: '**', redirectTo: '/' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+```
+
+Set \src\app\appcomponent.html to:
+
+```
+<app-material-navigation></app-material-navigation>
+
+```
 
 Install ElasticSearch client<br />
 `npm i elasticsearch`<br />
