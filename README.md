@@ -56,10 +56,6 @@ export class MaterialWrapperModule { }
 
 ```
 
-Generate schematic components<br />
-`ng generate @angular/material:dashboard MaterialDashboard`<br />
-`ng generate @angular/material:nav MaterialNavigation`
-
 Set \src\app\app.module.ts to:
 
 ```
