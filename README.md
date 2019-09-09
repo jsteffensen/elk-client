@@ -9,6 +9,11 @@ Test that it can be run in browser:
 Add Angular Material: `ng add @angular/material`<br />
 (select indigo/pink theme, include HammerJS for gesture support and select yes to browser animations).
 
+Generate schematic components
+`ng generate @angular/material:dashboard MaterialDashboard`
+
+`ng generate @angular/material:nav MaterialNavigation`
+
 Generate Material wrapper module: `ng g m MaterialWrapper`.
 
 set content of \src\app\material-wrapper\material-wrapper.module.ts to:
