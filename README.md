@@ -131,7 +131,6 @@ Set \src\app\appcomponent.html to:
       </button>
 	  <button mat-button routerLink="/">Home</button>
 	  <button mat-button routerLink="lists">Lists</button>
-      <!-- <span>realtime-grid</span> -->
 	  <span class="mat-spacer"></span>
 	  
 		<button mat-icon-button [matMenuTriggerFor]="menu">
@@ -148,7 +147,7 @@ Set \src\app\appcomponent.html to:
 		  </button>
 		</mat-menu>
     </mat-toolbar>
-	<!-- <mat-progress-bar mode="indeterminate" color="warn" *ngIf="isLoading"></mat-progress-bar> -->
+	<mat-progress-bar mode="indeterminate" color="warn" *ngIf="isLoading"></mat-progress-bar>
 	<router-outlet></router-outlet>
 	
   </mat-sidenav-content>
