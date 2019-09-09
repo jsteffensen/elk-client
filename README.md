@@ -117,7 +117,73 @@ export class AppRoutingModule { }
 Set \src\app\appcomponent.html to:
 
 ```
-<app-material-navigation></app-material-navigation>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      mode="over"
+      [opened]="false">
+    <mat-toolbar>Organization</mat-toolbar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="mat-elevation-z4">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+	  <button mat-button routerLink="/">Home</button>
+	  <button mat-button routerLink="lists">Lists</button>
+      <!-- <span>realtime-grid</span> -->
+	  <span class="mat-spacer"></span>
+	  
+		<button mat-icon-button [matMenuTriggerFor]="menu">
+		  <mat-icon>more_vert</mat-icon>
+		</button>
+		<mat-menu #menu="matMenu">
+		  <button mat-menu-item disabled>
+			<mat-icon>voicemail</mat-icon>
+			<span>Check voicemail</span>
+		  </button>
+		  <button mat-menu-item>
+			<mat-icon>notifications_off</mat-icon>
+			<span>Disable alerts</span>
+		  </button>
+		</mat-menu>
+    </mat-toolbar>
+	<!-- <mat-progress-bar mode="indeterminate" color="warn" *ngIf="isLoading"></mat-progress-bar> -->
+	<router-outlet></router-outlet>
+	
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+```
+
+Set \src\app\app.component.css to:
+
+```
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 400px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mat-spacer {
+  flex: 1 1 auto;
+}
 
 ```
 
