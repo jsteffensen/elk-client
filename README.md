@@ -184,5 +184,4 @@ Set \src\app\app.component.css to:
 
 ```
 
-Install ElasticSearch client<br />
-`npm install @elastic/elasticsearch`<br />
+Copy elasticsearch.angular.js from https://github.com/elastic/bower-elasticsearch-js<br />
