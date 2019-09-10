@@ -8,7 +8,6 @@ import { MaterialWrapperModule } from './material-wrapper/material-wrapper.modul
 import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 
-
 @NgModule({
   declarations: [
     AppComponent,

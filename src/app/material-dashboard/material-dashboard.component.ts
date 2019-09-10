@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { ElasticSearchService } from '../elastic-search.service';
 
 @Component({
   selector: 'app-material-dashboard',
   templateUrl: './material-dashboard.component.html',
   styleUrls: ['./material-dashboard.component.css']
 })
-export class MaterialDashboardComponent {
+export class MaterialDashboardComponent implements OnInit {
+	
+  isConnected = false;
+  status: string;
+  
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -29,5 +34,22 @@ export class MaterialDashboardComponent {
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, 
+              private es: ElasticSearchService, 
+			  private cd: ChangeDetectorRef) {
+				  this.isConnected = false;
+			  }
+			  
+    ngOnInit() {
+		this.es.isAvailable().then(() => {
+		  this.status = 'OK';
+		  this.isConnected = true;
+		}, error => {
+		  this.status = 'ERROR';
+		  this.isConnected = false;
+		  console.error('Server is down', error);
+		}).then(() => {
+		  this.cd.detectChanges();
+		});
+	}
 }
