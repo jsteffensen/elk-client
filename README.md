@@ -184,12 +184,114 @@ Set \src\app\app.component.css to:
 
 ```
 
-Copy elasticsearch.angular.js from https://github.com/elastic/bower-elasticsearch-js to \src\assets\js\<br />
+Imstall ElasticSearch client<br />
+`npm i elasticsearch-browser`
 
-Add it to angular.json scripts:
+Generate service to hold ElasticSearch client:
+
+`ng g s ElasticSearch`
+
+Edit contents of elastic-search.service.ts to:
 
 ```
-"scripts": [
-  "src/assets/js/elasticsearch.angular.min.js"
-]
+import { Injectable } from '@angular/core';
+import { Client } from 'elasticsearch-browser';
+import * as elasticsearch from 'elasticsearch-browser';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class ElasticSearchService {
+
+  private client: Client;
+ 
+  constructor() {
+    if (!this.client) {
+      this._connect();
+    }
+  }
+ 
+  private connect() {
+    this.client = new Client({
+      host: 'http://localhost:9200',
+      log: 'trace'
+    });
+  }
+ 
+  private _connect() {
+    this.client = new elasticsearch.Client({
+      host: 'localhost:9200',
+      log: 'trace'
+    });
+  }
+ 
+  isAvailable(): Promise<any> {
+    return this.client.ping({
+      requestTimeout: Infinity,
+      body: 'hello world!'
+    });
+  }
+}
+```
+
+Import service and use in a component:
+
+```
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { ElasticSearchService } from '../elastic-search.service';
+
+@Component({
+  selector: 'app-material-dashboard',
+  templateUrl: './material-dashboard.component.html',
+  styleUrls: ['./material-dashboard.component.css']
+})
+export class MaterialDashboardComponent implements OnInit {
+	
+  isConnected = false;
+  status: string;
+  
+  /** Based on the screen size, switch from standard to one column per row */
+  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return [
+          { title: 'Card 1', cols: 1, rows: 1 },
+          { title: 'Card 2', cols: 1, rows: 1 },
+          { title: 'Card 3', cols: 1, rows: 1 },
+          { title: 'Card 4', cols: 1, rows: 1 }
+        ];
+      }
+
+      return [
+        { title: 'Card 1', cols: 2, rows: 1 },
+        { title: 'Card 2', cols: 1, rows: 1 },
+        { title: 'Card 3', cols: 1, rows: 2 },
+        { title: 'Card 4', cols: 1, rows: 1 }
+      ];
+    })
+  );
+
+  constructor(private breakpointObserver: BreakpointObserver, 
+              private es: ElasticSearchService, 
+			  private cd: ChangeDetectorRef) {
+				  this.isConnected = false;
+			  }
+			  
+    ngOnInit() {
+		this.es.isAvailable().then(() => {
+		  this.status = 'OK';
+		  this.isConnected = true;
+		}, error => {
+		  this.status = 'ERROR';
+		  this.isConnected = false;
+		  console.error('Server is down', error);
+		}).then(() => {
+		  this.cd.detectChanges();
+		});
+	}
+}
+
 ```
