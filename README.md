@@ -302,7 +302,7 @@ For ElasticSearch server to accept calls from localhost:4200 edit ../elasticsear
 #
 # ----------------------------------- CORS -------------------------------------
 http.cors.enabled : true
-http.cors.allow-origin : "*"
+http.cors.allow-origin : "http://localhost:4200"
 http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
 http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length
 
