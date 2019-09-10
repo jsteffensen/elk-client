@@ -273,6 +273,12 @@ export class MaterialDashboardComponent implements OnInit {
 
 ```
 
+To use in an html view:
+
+`<div *ngIf="card.title=='Card 1'">Elasticsearch server status: {{status}}</div>`
+
+![screen shot](screenshot.png?raw=true)
+
 BONUS: For ElasticSearch server to accept calls from localhost:4200 edit ../elasticsearch/config/elasticsearch.yml to include:
 
 ```
