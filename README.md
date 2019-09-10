@@ -1,20 +1,21 @@
 # elk-client
 
 
+
 ## Create an Angular Material Application
 
 Generate new Angular app in CLI: `ng new elk-client`<br />
 (select yes to Angular routing and choose CSS).
 
 Test that it can be run in browser:
-`ng s -o`
+`ng s -o`.
 
 Add Angular Material: `ng add @angular/material`<br />
 (select indigo/pink theme, include HammerJS for gesture support and select yes to browser animations).
 
 Generate schematic components:
 
-`ng generate @angular/material:dashboard MaterialDashboard`
+`ng g @angular/material:dashboard MaterialDashboard`.
 
 Generate Material wrapper module: `ng g m MaterialWrapper`.
 
@@ -186,14 +187,16 @@ Add some styling to \src\app\app.component.css to:
 }
 
 ```
+
+
 ## Create an ElasticSearch client service
 
-Imstall the official ElasticSearch client<br />
-`npm i elasticsearch-browser`
+Install the official ElasticSearch client<br />
+`npm i elasticsearch-browser`.
 
 Generate service to hold the ElasticSearch client:
 
-`ng g s ElasticSearch`
+`ng g s ElasticSearch`.
 
 Edit contents of elastic-search.service.ts to:
 
@@ -249,7 +252,7 @@ import { ElasticSearchService } from '../elastic-search.service';
   ...
 })
 
-export class MaterialDashboardComponent implements OnInit {
+export class MyComponent implements OnInit {
 	
   isConnected = false;
   status: string;
