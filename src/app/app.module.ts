@@ -7,11 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialWrapperModule } from './material-wrapper/material-wrapper.module';
 import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MaterialDashboardComponent
+    MaterialDashboardComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
