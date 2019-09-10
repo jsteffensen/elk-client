@@ -185,4 +185,4 @@ Set \src\app\app.component.css to:
 ```
 
 Install ElasticSearch client<br />
-`npm i elasticsearch`<br />
+`npm install @elastic/elasticsearch`<br />
