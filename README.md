@@ -238,10 +238,10 @@ export class ElasticSearchService {
 Import service and use in a component:
 
 ```
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+**import { Component, OnInit, ChangeDetectorRef } from '@angular/core';**
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { ElasticSearchService } from '../elastic-search.service';
+**import { ElasticSearchService } from '../elastic-search.service';**
 
 @Component({
   selector: 'app-material-dashboard',
