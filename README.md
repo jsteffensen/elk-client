@@ -60,7 +60,7 @@ export class MaterialWrapperModule { }
 
 ```
 
-Set \src\app\app.module.ts to:
+Set \src\app\app.module.ts to use the MaterialWrapper:
 
 ```
 import { BrowserModule } from '@angular/platform-browser';
@@ -92,7 +92,7 @@ export class AppModule { }
 
 ```
 
-Set \src\app\app-routing.module.ts to:
+Move routing to seperate module in \src\app\app-routing.module.ts:
 
 ```
 import { NgModule } from '@angular/core';
@@ -112,7 +112,7 @@ export class AppRoutingModule { }
 
 ```
 
-Set \src\app\appcomponent.html to:
+Create a dashboard wireframe with a router outlet in \src\app\appcomponent.html:
 
 ```
 <mat-sidenav-container class="sidenav-container">
@@ -157,7 +157,7 @@ Set \src\app\appcomponent.html to:
 
 ```
 
-Set \src\app\app.component.css to:
+Add some styling to \src\app\app.component.css to:
 
 ```
 .sidenav-container {
@@ -184,10 +184,10 @@ Set \src\app\app.component.css to:
 
 ```
 
-Imstall ElasticSearch client<br />
+Imstall the official ElasticSearch client<br />
 `npm i elasticsearch-browser`
 
-Generate service to hold ElasticSearch client:
+Generate service to hold the ElasticSearch client:
 
 `ng g s ElasticSearch`
 
@@ -235,47 +235,24 @@ export class ElasticSearchService {
 }
 ```
 
-Import service and use in a component:
+Import the service for use in a component like so:
 
 ```
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import ...
 import { ElasticSearchService } from '../elastic-search.service';
 
 @Component({
-  selector: 'app-material-dashboard',
-  templateUrl: './material-dashboard.component.html',
-  styleUrls: ['./material-dashboard.component.css']
+  ...
 })
+
 export class MaterialDashboardComponent implements OnInit {
 	
   isConnected = false;
   status: string;
   
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
-        ];
-      }
+  ...
 
-      return [
-        { title: 'Card 1', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 2 },
-        { title: 'Card 4', cols: 1, rows: 1 }
-      ];
-    })
-  );
-
-  constructor(private breakpointObserver: BreakpointObserver, 
-              private es: ElasticSearchService, 
+  constructor(private es: ElasticSearchService, 
 			  private cd: ChangeDetectorRef) {
 				  this.isConnected = false;
 			  }
@@ -296,7 +273,7 @@ export class MaterialDashboardComponent implements OnInit {
 
 ```
 
-For ElasticSearch server to accept calls from localhost:4200 edit ../elasticsearch/config/elasticsearch.yml to include:
+BONUS: For ElasticSearch server to accept calls from localhost:4200 edit ../elasticsearch/config/elasticsearch.yml to include:
 
 ```
 #
