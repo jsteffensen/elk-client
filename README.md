@@ -186,10 +186,10 @@ Set \src\app\app.component.css to:
 
 Copy elasticsearch.angular.js from https://github.com/elastic/bower-elasticsearch-js to \src\assets\js\<br />
 
-add it to angular.json scripts:
+Add it to angular.json scripts:
 
 ```
 "scripts": [
-			  "src/assets/js/elasticsearch.angular.min.js"
-			]
+  "src/assets/js/elasticsearch.angular.min.js"
+]
 ```
