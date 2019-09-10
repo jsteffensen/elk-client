@@ -1,5 +1,8 @@
 # elk-client
 
+
+## Create an Angular Material Application
+
 Generate new Angular app in CLI: `ng new elk-client`<br />
 (select yes to Angular routing and choose CSS).
 
@@ -183,6 +186,7 @@ Add some styling to \src\app\app.component.css to:
 }
 
 ```
+## Create an ElasticSearch client service
 
 Imstall the official ElasticSearch client<br />
 `npm i elasticsearch-browser`
@@ -279,7 +283,9 @@ To use in an html view:
 
 ![screen shot](screenshot.png?raw=true)
 
-BONUS: For ElasticSearch server to accept calls from localhost:4200 edit ../elasticsearch/config/elasticsearch.yml to include:
+## ElasticSearch configuration
+
+For ElasticSearch server to accept calls from localhost:4200 edit ../elasticsearch/config/elasticsearch.yml to include:
 
 ```
 #
