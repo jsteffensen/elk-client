@@ -295,3 +295,13 @@ export class MaterialDashboardComponent implements OnInit {
 }
 
 ```
+
+For AleasticSearch to accepts calls from localhost:4200, edit ../elasticsearch/config/elasticsearch.yml to include:
+
+```
+http.cors.enabled : true
+http.cors.allow-origin : "*"
+http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
+http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length
+
+```
