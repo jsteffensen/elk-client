@@ -116,7 +116,7 @@ export class AppRoutingModule { }
 
 ```
 
-Create a dashboard wireframe with a router outlet in \src\app\appcomponent.html:
+Create a dashboard wireframe with a router outlet in \src\app\app.component.html:
 
 ```
 <mat-sidenav-container class="sidenav-container">
