@@ -4,8 +4,8 @@ import { MaterialDashboardComponent } from './material-dashboard/material-dashbo
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-	{ path: '', component: MaterialDashboardComponent },
-	{ path: 'app', component: DashboardComponent },
+	{ path: '', component: DashboardComponent },
+	{ path: 'app', component: MaterialDashboardComponent },
 	{ path: '**', redirectTo: '/' }
 ];
 

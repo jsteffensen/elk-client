@@ -1,6 +1,7 @@
 import {CollectionViewer, SelectionChange} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {Component, Injectable, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -119,19 +120,37 @@ export class DynamicDataSource {
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(database: DynamicDatabase) {
+  options: FormGroup;
+  
+  treeControl: FlatTreeControl<DynamicFlatNode>;
+  dataSource: DynamicDataSource;
+
+  //documents
+  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  
+  
+  constructor(database: DynamicDatabase, fb: FormBuilder) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
 
     this.dataSource.data = database.initialData();
+	
+	this.dataSource.docs = ELEMENT_DATA;
+	
+	this.options = fb.group({
+      color: 'primary',
+      fontSize: [16, Validators.min(10)],
+    });
   }
 
   ngOnInit() {
   }
   
-  treeControl: FlatTreeControl<DynamicFlatNode>;
+  getFontSize() {
+    return Math.max(10, this.options.value.fontSize);
+  }
+  
 
-  dataSource: DynamicDataSource;
 
   getLevel = (node: DynamicFlatNode) => node.level;
 
@@ -140,3 +159,23 @@ export class DashboardComponent implements OnInit {
   hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
 
 }
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+];

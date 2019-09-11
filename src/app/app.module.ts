@@ -8,6 +8,7 @@ import { MaterialWrapperModule } from './material-wrapper/material-wrapper.modul
 import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+	FormsModule,
+	ReactiveFormsModule,
     MaterialWrapperModule,
     LayoutModule,
   ],
