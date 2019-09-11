@@ -2,6 +2,8 @@ import {CollectionViewer, SelectionChange} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {Component, Injectable, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -112,6 +114,10 @@ export class DynamicDataSource {
   }
 }
 
+export interface Fruit {
+  name: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -128,6 +134,17 @@ export class DashboardComponent implements OnInit {
   //documents
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
   
+  //tags
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruits: Fruit[] = [
+    {name: 'lemon'},
+    {name: 'lime'},
+    {name: 'apple'},
+  ];
   
   constructor(database: DynamicDatabase, fb: FormBuilder) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
@@ -135,7 +152,7 @@ export class DashboardComponent implements OnInit {
 
     this.dataSource.data = database.initialData();
 	
-	this.dataSource.docs = ELEMENT_DATA;
+	//this.dataSource.docs = ELEMENT_DATA;
 	
 	this.options = fb.group({
       color: 'primary',
@@ -157,6 +174,29 @@ export class DashboardComponent implements OnInit {
   isExpandable = (node: DynamicFlatNode) => node.expandable;
 
   hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
+  
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.fruits.push({name: value.trim()});
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit: Fruit): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
 
 }
 
