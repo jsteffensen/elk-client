@@ -19,7 +19,12 @@
 .dashboard-card-content {
   text-align: center;
 }
+
 .search-container {
   display: flex;
   flex-direction: column;
+}
+
+.example-tree-progress-bar {
+  margin-left: 30px;
 }
