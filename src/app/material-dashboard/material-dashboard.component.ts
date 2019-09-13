@@ -44,12 +44,21 @@ export class MaterialDashboardComponent implements OnInit {
 		this.es.isAvailable().then(() => {
 		  this.status = 'OK';
 		  this.isConnected = true;
+		  this.getIndices();
 		}, error => {
 		  this.status = 'ERROR';
 		  this.isConnected = false;
 		  console.error('Server is down', error);
 		}).then(() => {
 		  this.cd.detectChanges();
+		});
+	}
+	
+	getIndices() {
+		this.es.getIndices().then((i)=>{
+			console.log(i);
+		}, (error) => {
+			console.error('No index available.', error);
 		});
 	}
 }

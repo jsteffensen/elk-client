@@ -33,7 +33,14 @@ export class ElasticSearchService {
   isAvailable(): Promise<any> {
     return this.client.ping({
       requestTimeout: Infinity,
-      body: 'hello world!'
+      body: 'give me a ping - and one ping only.'
     });
+  }
+  
+  getIndices(): Promise<any> {
+	return this.client.cat.indices({
+	  index: 'casefiles',
+      format: 'json'
+    });  
   }
 }

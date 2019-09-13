@@ -1,11 +1,14 @@
 import {CollectionViewer, SelectionChange} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {Component, Injectable, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
+import {Component, Injectable, ChangeDetectorRef, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+
+import { ElasticSearchService } from '../elastic-search.service';
 
 /** Flat node with expandable and level information */
 export class DynamicFlatNode {
@@ -114,7 +117,7 @@ export class DynamicDataSource {
   }
 }
 
-export interface Fruit {
+export interface Tag {
   name: string;
 }
 
@@ -126,8 +129,8 @@ export interface Fruit {
 })
 export class DashboardComponent implements OnInit {
 
-  options: FormGroup;
-  
+  isConnected = false;
+
   treeControl: FlatTreeControl<DynamicFlatNode>;
   dataSource: DynamicDataSource;
 
@@ -140,13 +143,14 @@ export class DashboardComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruits: Fruit[] = [
+  tags: Tag[] = [
     {name: 'lemon'},
     {name: 'lime'},
     {name: 'apple'},
   ];
   
-  constructor(database: DynamicDatabase, fb: FormBuilder) {
+  constructor(database: DynamicDatabase, fb: FormBuilder, private es: ElasticSearchService, private cd: ChangeDetectorRef) {
+	this.isConnected = false;
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
 
@@ -154,20 +158,27 @@ export class DashboardComponent implements OnInit {
 	
 	//this.dataSource.docs = ELEMENT_DATA;
 	
-	this.options = fb.group({
-      color: 'primary',
-      fontSize: [16, Validators.min(10)],
-    });
   }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+		this.es.isAvailable().then(() => {
+		  this.isConnected = true;
+		  this.getIndices();
+		}, error => {
+		  this.isConnected = false;
+		  console.error('Server is down', error);
+		}).then(() => {
+		  this.cd.detectChanges();
+		});
+	}
   
-  getFontSize() {
-    return Math.max(10, this.options.value.fontSize);
-  }
-  
-
+	getIndices() {
+		this.es.getIndices().then((i)=>{
+			//do stuff
+		}, (error) => {
+			console.error('No index available.', error);
+		});
+	}
 
   getLevel = (node: DynamicFlatNode) => node.level;
 
@@ -181,7 +192,7 @@ export class DashboardComponent implements OnInit {
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.fruits.push({name: value.trim()});
+      this.tags.push({name: value.trim()});
     }
 
     // Reset the input value
@@ -190,11 +201,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  remove(fruit: Fruit): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(tags: Tag): void {
+    const index = this.tags.indexOf(tags);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.tags.splice(index, 1);
     }
   }
 
