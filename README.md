@@ -315,12 +315,12 @@ Add to src\styles.css
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: url(assets/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
   src: local('Material Icons'),
     local('MaterialIcons-Regular'),
-    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
-    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
-    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+    url(assets/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+    url(assets/iconfont/MaterialIcons-Regular.woff) format('woff'),
+    url(assets/iconfont/MaterialIcons-Regular.ttf) format('truetype');
 }
 
 .material-icons {
