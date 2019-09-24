@@ -300,15 +300,15 @@ http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Le
 
 ```
 
-## Self hosting icons and fonts (https://google.github.io/material-design-icons/)
+## Self hosting icons and fonts
 
 `npm install material-design-icons --save`
 
-Copy \node_modules\material-design-icons\iconfont\ to assets.
+Copy \node_modules\material-design-icons\iconfont\ to \assets.
 
 Remove `<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">` from src\index.html-
 
-Add to src\styles.css
+Add to src\styles.css (from https://google.github.io/material-design-icons/):
 
 ```
 @font-face {
