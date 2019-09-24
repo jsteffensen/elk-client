@@ -43,4 +43,11 @@ export class ElasticSearchService {
       format: 'json'
     });  
   }
+  
+  getRootFile(): Promise<any> {
+	return this.client.cat.indices({
+	  index: 'casefiles',
+      format: 'json'
+    });  
+  }
 }
