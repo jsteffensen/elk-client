@@ -44,10 +44,30 @@ export class ElasticSearchService {
     });  
   }
   
-  getRootFile(): Promise<any> {
-	return this.client.cat.indices({
+  getRootFileByUserId(user): Promise<any> {
+	return this.client.search({
 	  index: 'casefiles',
-      format: 'json'
-    });  
+	  body: {
+	    query: {
+		  bool: {
+			  must: [
+				  {match: { case_type: 'root'}},
+				  {match: { user: user}}
+			  ]
+		  }
+	    }
+	  }
+	});
+  }
+  
+  getAllFiles(): Promise<any> {
+	return this.client.search({
+	  index: 'casefiles',
+	  body: {
+	    query: {
+		  match_all: {  }
+	    }
+	  }
+	});
   }
 }

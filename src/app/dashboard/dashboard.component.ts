@@ -149,6 +149,9 @@ export class DashboardComponent implements OnInit {
     {name: 'apple'},
   ];
   
+  //mock user id
+  user = 'KC6NS4';
+  
   constructor(database: DynamicDatabase, fb: FormBuilder, private es: ElasticSearchService, private cd: ChangeDetectorRef) {
 	this.isConnected = false;
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
@@ -168,6 +171,9 @@ export class DashboardComponent implements OnInit {
 		  this.isConnected = false;
 		  console.error('Server is down', error);
 		}).then(() => {
+		  this.es.getRootFileByUserId(this.user);
+		}).then((rootfile) => {
+		  console.log(rootfile);
 		  this.cd.detectChanges();
 		});
 	}
