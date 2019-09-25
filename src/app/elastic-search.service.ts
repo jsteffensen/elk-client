@@ -60,12 +60,14 @@ export class ElasticSearchService {
 	});
   }
   
-  getAllFiles(): Promise<any> {
+  getFilesByParent(parent): Promise<any> {
 	return this.client.search({
 	  index: 'casefiles',
 	  body: {
 	    query: {
-		  match_all: {  }
+		  match: { 
+		    parent: parent
+		  }
 	    }
 	  }
 	});

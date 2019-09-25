@@ -129,6 +129,7 @@ export interface Tag {
 })
 export class DashboardComponent implements OnInit {
 
+  selectedCase = '';
   isConnected = false;
 
   treeControl: FlatTreeControl<DynamicFlatNode>;
@@ -153,6 +154,7 @@ export class DashboardComponent implements OnInit {
   user = 'KC6NS4';
   
   constructor(database: DynamicDatabase, fb: FormBuilder, private es: ElasticSearchService, private cd: ChangeDetectorRef) {
+	  
 	this.isConnected = false;
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
@@ -171,9 +173,12 @@ export class DashboardComponent implements OnInit {
 		  this.isConnected = false;
 		  console.error('Server is down', error);
 		}).then(() => {
-		  this.es.getRootFileByUserId(this.user);
-		}).then((rootfile) => {
-		  console.log(rootfile);
+		  return this.es.getRootFileByUserId(this.user);
+		}).then((res) => {
+		  this.selectedCase = res.hits.hits[0]._id;
+		  return this.es.getFilesByParent(this.selectedCase);
+		}).then((childcases) => {
+		  console.log(childcases);
 		  this.cd.detectChanges();
 		});
 	}
